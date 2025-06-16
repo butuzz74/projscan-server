@@ -4,12 +4,12 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-  "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
-  "build": "tsc",
-  "start": "node dist/server.js",
-  "lint": "eslint . --ext .ts",
-  "format": "prettier --write 'src/**/*.{ts,tsx,js,json,md}'",
-  "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "node --loader ts-node/esm src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "lint": "eslint . --ext .ts",
+    "format": "prettier --write 'src/**/*.{ts,tsx,js,json,md}'",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "Danilchik Alexey",
@@ -34,6 +34,7 @@
     "eslint-plugin-react": "^7.37.5",
     "globals": "^16.2.0",
     "prettier": "^3.5.3",
+    "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.33.1"

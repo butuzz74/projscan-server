@@ -2,7 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import projectorRoutes from './routes/projector.routes';
+import productRoutes from './routes/product.routes.ts';
 
 dotenv.config();
 
@@ -15,13 +15,8 @@ mongoose
   .then(() => console.log('MongoDB connected'))
   .catch((err) => console.error('MongoDB error:', err));
 
-app.get('/', (_req, res) => {
-  res.send('ProjScan API is running');
-});
+app.use('/api/products', productRoutes);
 
-app.use('/api/projectors', projectorRoutes);
+const PORT = parseInt(process.env.PORT || '4000', 10);
 
-const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
-});
+app.listen(PORT, '0.0.0.0', () => console.log('Listening on all interfaces'));
