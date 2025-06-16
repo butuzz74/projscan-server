@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import Product from '../models/Product.ts';
+import mongoose from 'mongoose';
 
 type Query = {
   model?: string;
@@ -14,10 +15,11 @@ router.post('/', async (req, res) => {
     await product.save();
     res.status(201).json(product);
   } catch (err) {
-    if (err.code === 11000 && err.keyPattern?.serialNumber) {
+    const error = err as mongoose.mongo.MongoServerError;
+    if (error.code === 11000 && error.keyPattern?.serialNumber) {
       res.status(409).json({ message: 'Серийный номер уже существует в базе.' });
     } else {
-      res.status(400).json({ error: 'Ошибка при сохранении', details: err });
+      res.status(400).json({ error: 'Ошибка при сохранении', details: error });
     }
   }
 });
