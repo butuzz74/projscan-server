@@ -1,16 +1,23 @@
 {
   "compilerOptions": {
+    /* базовое */
     "target": "ES2020",
     "module": "ESNext",
     "moduleResolution": "Node",
-    "outDir": "dist",
     "rootDir": "src",
+    "outDir": "dist",
+
+    /* строгий режим и удобства */
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "declaration": true,
-    "emitDeclarationOnly": true,
-    "allowImportingTsExtensions": true,
+
+    /* декларации – оставить,  JS‑код тоже нужен */
+    "declaration": true,          // ✅ оставляем .d.ts
+    /* УБИРАЕМ  "emitDeclarationOnly": true */
+
+    /* это вам теперь не нужно для обычного Node‑JS */
+    // "allowImportingTsExtensions": true
   },
   "include": ["src"]
 }

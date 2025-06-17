@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import Product from '../models/Product.ts';
+import Product from '../models/Product.js';
 import mongoose from 'mongoose';
 
 type Query = {
