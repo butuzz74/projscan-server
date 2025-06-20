@@ -45,13 +45,23 @@ router.get('/', async (req, res) => {
 router.delete('/', async (req, res) => {
   const { serialNumber } = req.query;
   const query: Query = {};
-  if (serialNumber && typeof serialNumber === 'string') query.serialNumber = serialNumber;
+
+  if (serialNumber && typeof serialNumber === 'string') {
+    query.serialNumber = serialNumber;
+  } else {
+    res.status(400).json({ message: 'Серийный номер не передан' });
+  }
+
   try {
-    await Product.deleteOne(query);
-    res.status(200).json({ message: 'Товар удален' });
+    const result = await Product.deleteOne(query);
+    if (result.deletedCount === 0) {
+      res.status(404).json({ message: 'Товар не найден' });
+    } else {
+      res.status(200).json({ message: 'Товар удалён' });
+    }
   } catch (err) {
     console.log(err);
-    res.status(500).json({ err: 'Ошибка при получении данных' });
+    res.status(500).json({ error: 'Ошибка при удалении товара' });
   }
 });
 
