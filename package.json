@@ -17,7 +17,9 @@
   "description": "Server for ProjScan application",
   "dependencies": {
     "cors": "^2.8.5",
+    "dayjs": "^1.11.13",
     "dotenv": "^16.5.0",
+    "exceljs": "^4.4.0",
     "express": "^5.1.0",
     "mongoose": "^8.15.1"
   },

@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import productRoutes from './routes/product.routes.js';
+import excelRoutes from './routes/excel.routes.js';
 
 dotenv.config();
 
@@ -16,6 +17,7 @@ mongoose
   .catch((err) => console.error('MongoDB error:', err));
 
 app.use('/api/products', productRoutes);
+app.use('/api/excel', excelRoutes);
 
 const PORT = parseInt(process.env.PORT || '4000', 10);
 

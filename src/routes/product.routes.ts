@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import Product from '../models/Product.js';
+import DeletedLog from '../models/DeletedLog.js';
 import mongoose from 'mongoose';
 
 type Query = {
@@ -30,7 +31,7 @@ router.get('/', async (req, res) => {
   if (model && typeof model === 'string') query.model = model;
   if (serialNumber && typeof serialNumber === 'string') query.serialNumber = serialNumber;
   try {
-    const products = await Product.find(query).select('-__v -createdAt');
+    const products = await Product.find(query).select('-__v');
     if (!products || products.length === 0) {
       res.status(400).json({ message: 'Товар(ы) отсутствуют в базе' });
     } else {
@@ -53,11 +54,22 @@ router.delete('/', async (req, res) => {
   }
 
   try {
-    const result = await Product.deleteOne(query);
-    if (result.deletedCount === 0) {
+    const product = await Product.findOne(query);
+    if (!product) {
       res.status(404).json({ message: 'Товар не найден' });
     } else {
-      res.status(200).json({ message: 'Товар удалён' });
+      await DeletedLog.create({
+        serialNumber: product.serialNumber,
+        model: product.model,
+        deletedAt: new Date()
+      });
+
+      const result = await Product.deleteOne(query);
+      if (result.deletedCount === 0) {
+        res.status(404).json({ message: 'Товар не найден' });
+      } else {
+        res.status(200).json({ message: 'Товар удалён' });
+      }
     }
   } catch (err) {
     console.log(err);
