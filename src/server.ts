@@ -4,6 +4,9 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import productRoutes from './routes/product.routes.js';
 import excelRoutes from './routes/excel.routes.js';
+import massageRoutes from './routes/massage.routes.js';
+import bookingRoutes from './routes/booking.routes.js';
+import workdayRoutes from './routes/workday.routes.js';
 
 dotenv.config();
 
@@ -18,6 +21,9 @@ mongoose
 
 app.use('/api/products', productRoutes);
 app.use('/api/excel', excelRoutes);
+app.use('/api/massages', massageRoutes);
+app.use('/api/bookings', bookingRoutes);
+app.use('/api/workdays', workdayRoutes);
 
 const PORT = parseInt(process.env.PORT || '4000', 10);
 
